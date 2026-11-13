@@ -1,21 +1,12 @@
 # Relatório de Machine Learning · AJA
 
-| Integrante | RM |
-|---|---|
-| Guilherme Santos Nunes | RM558989 |
-| Kaique Rodrigues Zaffarani | RM556677 |
-| Pedro Josué Pereira Almeida | RM554913 |
-
 **Global Solution 2026.2 · CitizenTech · Inteligência Artificial & Machine Learning**
 Notebook executado: [`notebook_sp156_tempo_resposta.ipynb`](notebook_sp156_tempo_resposta.ipynb)
 
 ## 1. Problema
 
-O AJA é uma plataforma de participação cidadã para pessoas com deficiência visual e auditiva do
-Parque Doroteia (Subprefeitura Cidade Ademar, zona sul de São Paulo). Quem encontra uma barreira no
-caminho (calçada quebrada, obstáculo, travessia insegura, semáforo de pedestre com tempo curto)
-pode pedir reparo à Prefeitura pelo SP156. Depois disso, porém, não sabe quanto tempo vai esperar e
-precisa acompanhar o protocolo por conta própria.
+O contexto do AJA está no [README principal](../README.md). Aqui o foco é quem já abriu um pedido de
+reparo no SP156 e não sabe quanto tempo vai esperar.
 
 **Pergunta de ML:** no momento em que um pedido sobre barreira para pedestres é aberto no SP156, ele
 será finalizado em até 30 dias?
@@ -123,20 +114,28 @@ Limiar de decisão 0,5. O teste foi usado uma única vez, depois da escolha do m
 ![Métricas de treino e teste](figuras/05_treino_vs_teste.png)
 ![Curvas de hiperparâmetros](figuras/03_curvas_hiperparametros.png)
 
-**Overfitting.**
-- Na busca, o AUC de treino sobe com `max_depth` e `learning_rate` até quase 1. O AUC de validação,
-  por outro lado, para em torno de 0,84 e depois cai, e o gap passa de 0,05 para 0,18.
-- O modelo mais complexo decora o treino (AUC 1,000) e é o pior no teste (0,801). É abaixo até do
-  baseline, então ele overfita.
-- O modelo escolhido tem gap treino − teste de 0,052. Parte dessa diferença vem da mudança da taxa de
-  resposta ao longo dos anos, e não de excesso de ajuste.
+**Overfitting: quando o modelo decora em vez de aprender.** Pense num aluno que decora as respostas
+da lista de exercícios: tira 10 na lista e vai mal na prova. Com o modelo acontece o mesmo.
+- **Na busca:** quanto mais profundas as árvores (`max_depth`) e maior o passo de aprendizado
+  (`learning_rate`), mais o modelo acerta no treino, chegando a uma AUC de quase 1. Nos meses que ele
+  não viu, porém, a nota trava em torno de 0,84 e depois cai. A distância entre as duas notas (o gap)
+  cresce de 0,05 para 0,18.
+- **O caso extremo:** o modelo mais complexo da grade tem AUC de 1,000 no treino e 0,801 no teste, pior
+  até que o baseline. Ele decorou.
+- **O modelo escolhido** (o XGBoost da busca: `max_depth` 5, `learning_rate` 0,03 e 400 árvores) perde
+  só 0,05 do treino para o teste. Parte dessa perda nem é decoreba: a taxa de resposta da Prefeitura
+  mudou de um ano para o outro, e o teste cobra justamente esse período novo.
 
-**Leitura honesta.** O XGBoost ordena melhor os pedidos por chance de resposta: o AUC no teste é
-0,831, contra 0,794 do baseline. A precisão também é maior. Com o limiar de 0,5, porém, a acurácia é
-praticamente igual e o F1 fica um pouco abaixo do baseline, que acerta mais positivos porque chuta
-“sim” com mais frequência. O tipo de serviço explica cerca de 80% do ganho do modelo (ganho total). A
-subprefeitura e a localização ajustam a previsão dentro de cada serviço, e é isso que faz o modelo
-superar o baseline.
+**O que os números dizem, sem exagero.**
+- **Onde o modelo ganha:** ele ordena melhor quais pedidos têm mais chance de sair rápido. A AUC no teste
+  é 0,831, contra 0,794 do baseline. A precisão também é maior: quando ele diz “sai em 30 dias”, acerta
+  mais vezes.
+- **Onde empata:** quando a chance vira um “sim ou não” (corte em 0,5), a acurácia fica praticamente
+  igual à do baseline e o F1 fica um pouco abaixo. Isso acontece porque o baseline diz “sim” com mais
+  frequência e, por isso, encontra mais pedidos rápidos.
+- **De onde vem a previsão:** o tipo de serviço responde por cerca de 80% do que o modelo aprendeu. A
+  subprefeitura e a localização fazem o ajuste fino dentro de cada serviço, e é esse ajuste que coloca o
+  modelo à frente do baseline.
 
 ## 6. Conclusão para o cidadão
 

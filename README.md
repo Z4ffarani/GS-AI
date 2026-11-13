@@ -36,8 +36,7 @@ O trabalho de organizar a demanda e cobrar a resposta fica com a plataforma, e n
 | **Cidadão beneficiado** | Pessoas com deficiência visual e auditiva que circulam a pé pelo bairro |
 | **Problema, em uma frase** | Pessoas com deficiência visual e auditiva do Parque Doroteia enfrentam barreiras nas calçadas e travessias, e relatar e acompanhar a solução junto à Prefeitura é trabalhoso e pouco acessível. |
 | **Como funciona** | O morador relata a barreira, o relato vira um tópico com evidências, a comunidade apoia ou confirma, o AJA gera um dossiê para o órgão responsável e acompanha o protocolo até a resposta. |
-| **O que cada parte faz** | **IA & ML (este repositório):** estima se um pedido de barreira será finalizado pela Prefeitura em até 30 dias, com dados reais do SP156.<br>**Cybersecurity:** protege dados pessoais e de saúde (LGPD) e garante que a identidade de quem relatou não vaze no dossiê.<br>**Physical Computing:** um ESP32 monitora o semáforo de pedestres acessível e envia falhas ao AJA como evidência. |
-| **Link do repositório** | https://github.com/Z4ffarani/GS-AI |
+| **O que cada parte faz** | **Dados:** coleta e recorte de pedidos reais do SP156 sobre barreiras para pedestres.<br>**Modelo:** um XGBoost estima se um pedido será finalizado pela Prefeitura em até 30 dias.<br>**Leitura para o cidadão:** a previsão vira expectativa de prazo e prioridade de acompanhamento no AJA. |
 | **Indicador de impacto** | Barreiras mapeadas; % de demandas com protocolo aberto; tempo médio até a resposta do órgão; nota dada por pessoas com deficiência depois da intervenção |
 | **ODS conectados** | ODS 11 (meta 11.7: espaços públicos seguros e acessíveis, inclusive para pessoas com deficiência), ODS 10 (meta 10.2: inclusão independente de deficiência), ODS 9 (infraestrutura de qualidade e inclusiva) |
 
