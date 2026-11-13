@@ -62,7 +62,7 @@ abertos de jan/2020 a set/2026.
 | Relatório | [`ml/RELATORIO_ML.md`](ml/RELATORIO_ML.md) |
 | Fonte, link e período dos dados | [`ml/dados/README.md`](ml/dados/README.md) |
 | Dependências | [`ml/requirements.txt`](ml/requirements.txt) |
-| Vídeo (até 5 min) | *link a incluir* |
+| Vídeo (até 5 min) | [youtu.be/FiBwPxZ5UpQ](https://youtu.be/FiBwPxZ5UpQ) |
 
 ## Como esta atividade agrega ao AJA
 
