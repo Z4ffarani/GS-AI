@@ -114,8 +114,8 @@ Limiar de decisão 0,5. O teste foi usado uma única vez, depois da escolha do m
 ![Métricas de treino e teste](figuras/05_treino_vs_teste.png)
 ![Curvas de hiperparâmetros](figuras/03_curvas_hiperparametros.png)
 
-**Overfitting: quando o modelo decora em vez de aprender.** Pense num aluno que decora as respostas
-da lista de exercícios: tira 10 na lista e vai mal na prova. Com o modelo acontece o mesmo.
+**Overfitting: quando o modelo decora em vez de aprender.** Um modelo com overfitting memoriza os
+detalhes dos dados de treino e não consegue generalizar: vai muito bem no que já viu e mal em dados novos.
 - **Na busca:** quanto mais profundas as árvores (`max_depth`) e maior o passo de aprendizado
   (`learning_rate`), mais o modelo acerta no treino, chegando a uma AUC de quase 1. Nos meses que ele
   não viu, porém, a nota trava em torno de 0,84 e depois cai. A distância entre as duas notas (o gap)
@@ -123,7 +123,7 @@ da lista de exercícios: tira 10 na lista e vai mal na prova. Com o modelo acont
 - **O caso extremo:** o modelo mais complexo da grade tem AUC de 1,000 no treino e 0,801 no teste, pior
   até que o baseline. Ele decorou.
 - **O modelo escolhido** (o XGBoost da busca: `max_depth` 5, `learning_rate` 0,03 e 400 árvores) perde
-  só 0,05 do treino para o teste. Parte dessa perda nem é decoreba: a taxa de resposta da Prefeitura
+  só 0,05 do treino para o teste. Parte dessa perda nem é overfitting: a taxa de resposta da Prefeitura
   mudou de um ano para o outro, e o teste cobra justamente esse período novo.
 
 **O que os números dizem, sem exagero.**
